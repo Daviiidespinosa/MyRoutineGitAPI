@@ -18,7 +18,7 @@ FROM openjdk:17-slim
 WORKDIR /app
 
 # Copia el archivo JAR generado desde el paso anterior
-COPY --from=build /app/target/your-api.jar /app/your-api.jar
+COPY --from=build /app/target/MyRoutineAPI-0.0.1-SNAPSHOT.jar /app/MyRoutineAPI-0.0.1-SNAPSHOT.jar
 
 # Comando para ejecutar la aplicación
-CMD ["java", "-jar", "your-api.jar"]
+CMD ["java", "-jar", "MyRoutineAPI-0.0.1-SNAPSHOT.jar"]
