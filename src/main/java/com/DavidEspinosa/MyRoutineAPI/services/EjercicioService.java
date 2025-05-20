@@ -1,4 +1,3 @@
-// src/main/java/com/DavidEspinosa/MyRoutineAPI/services/EjercicioService.java
 package com.DavidEspinosa.MyRoutineAPI.services;
 
 import com.DavidEspinosa.MyRoutineAPI.models.Ejercicio;

@@ -4,8 +4,6 @@ public class RutinaDTO {
     private String nombre;
     private Long usuarioId;
 
-    public RutinaDTO() {}
-
     public String getNombre() {
         return nombre;
     }

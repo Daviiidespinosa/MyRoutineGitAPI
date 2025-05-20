@@ -1,14 +1,12 @@
-// src/main/java/com/DavidEspinosa/MyRoutineAPI/controllers/SerieController.java
 package com.DavidEspinosa.MyRoutineAPI.controllers;
 
 import com.DavidEspinosa.MyRoutineAPI.dto.SerieDTO;
 import com.DavidEspinosa.MyRoutineAPI.models.EjercicioRutina;
 import com.DavidEspinosa.MyRoutineAPI.models.Serie;
-import com.DavidEspinosa.MyRoutineAPI.services.SerieService;
 import com.DavidEspinosa.MyRoutineAPI.services.EjercicioRutinaService;
+import com.DavidEspinosa.MyRoutineAPI.services.SerieService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
@@ -23,8 +21,15 @@ public class SerieController {
         this.erService = erService;
     }
 
-    @GetMapping public List<Serie> all() { return service.findAll(); }
-    @GetMapping("/{id}") public Serie one(@PathVariable Long id) { return service.findById(id); }
+    @GetMapping
+    public List<Serie> all() {
+        return service.findAll();
+    }
+
+    @GetMapping("/{id}")
+    public Serie one(@PathVariable Long id) {
+        return service.findById(id);
+    }
 
     @PostMapping
     public ResponseEntity<Serie> create(@RequestBody SerieDTO dto) {
@@ -38,15 +43,19 @@ public class SerieController {
     }
 
     @PutMapping("/{id}")
-    public Serie update(@PathVariable Long id, @RequestBody SerieDTO dto) {
+    public ResponseEntity<Serie> update(
+            @PathVariable Long id,
+            @RequestBody SerieDTO dto
+    ) {
         EjercicioRutina er = erService.findById(dto.getEjercicioRutinaId());
         Serie s = Serie.builder()
-                .id(id)
+                // NO seteamos .id(id)
                 .ejercicioRutina(er)
                 .repeticiones(dto.getRepeticiones())
                 .pesoLevantado(dto.getPesoLevantado())
                 .build();
-        return service.update(id, s);
+        Serie updated = service.update(id, s);
+        return ResponseEntity.ok(updated);
     }
 
     @DeleteMapping("/{id}")

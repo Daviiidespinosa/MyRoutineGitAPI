@@ -53,19 +53,20 @@ public class EjercicioRutinaController {
     }
 
     @PutMapping("/{id}")
-    public EjercicioRutina update(
+    public ResponseEntity<EjercicioRutina> update(
             @PathVariable Long id,
             @RequestBody EjercicioRutinaDTO dto
     ) {
         Rutina r = rutinaService.findById(dto.getRutinaId());
         Ejercicio e = ejercicioService.findById(dto.getEjercicioId());
+        // **OJO**: NO seteamos .id(id) aquí
         EjercicioRutina er = EjercicioRutina.builder()
-                .id(id)
                 .rutina(r)
                 .ejercicio(e)
                 .seriesPlaneadas(dto.getSeriesPlaneadas())
                 .build();
-        return service.update(id, er);
+        EjercicioRutina updated = service.update(id, er);
+        return ResponseEntity.ok(updated);
     }
 
     @DeleteMapping("/{id}")
@@ -74,7 +75,6 @@ public class EjercicioRutinaController {
         return ResponseEntity.noContent().build();
     }
 
-    // Nuevo endpoint: obtener solo los ejerciciosRutina de una rutina
     @GetMapping("/rutina/{rutinaId}")
     public List<EjercicioRutina> findByRutina(@PathVariable Long rutinaId) {
         return service.findByRutinaId(rutinaId);

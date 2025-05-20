@@ -49,4 +49,12 @@ public class UsuarioServiceImpl implements UsuarioService {
         }
         repo.deleteById(id);
     }
+
+    @Override
+    public Usuario login(String nombre, String contrasena) {
+        return repo.findByNombreAndContrasena(nombre, contrasena)
+                .orElseThrow(() ->
+                        new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Credenciales inválidas")
+                );
+    }
 }

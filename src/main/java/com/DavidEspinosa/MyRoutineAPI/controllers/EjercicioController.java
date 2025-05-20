@@ -1,4 +1,3 @@
-// src/main/java/com/DavidEspinosa/MyRoutineAPI/controllers/EjercicioController.java
 package com.DavidEspinosa.MyRoutineAPI.controllers;
 
 import com.DavidEspinosa.MyRoutineAPI.dto.EjercicioDTO;
@@ -8,7 +7,6 @@ import com.DavidEspinosa.MyRoutineAPI.services.EjercicioService;
 import com.DavidEspinosa.MyRoutineAPI.services.GrupoMuscularService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
