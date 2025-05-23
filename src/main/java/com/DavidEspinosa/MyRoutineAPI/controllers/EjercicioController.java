@@ -35,14 +35,25 @@ public class EjercicioController {
     }
 
     @PutMapping("/{id}")
-    public Ejercicio update(@PathVariable Long id, @RequestBody EjercicioDTO dto) {
-        GrupoMuscular gm = gmService.findById(dto.getGrupoMuscularId());
-        Ejercicio e = Ejercicio.builder()
-                .id(id)
-                .nombre(dto.getNombre())
-                .grupoMuscular(gm)
-                .build();
-        return service.update(id, e);
+    public ResponseEntity<Ejercicio> update(
+            @PathVariable Long id,
+            @RequestBody EjercicioDTO dto
+    ) {
+        // 1) recupera el ejercicio existente (lanza 404 si no existe)
+        Ejercicio existente = service.findById(id);
+
+        // 2) cambia sólo el nombre
+        existente.setNombre(dto.getNombre());
+
+        // 3) si en el DTO viene un grupo distinto, lo aplicas
+        if (dto.getGrupoMuscularId() != null) {
+            GrupoMuscular gm = gmService.findById(dto.getGrupoMuscularId());
+            existente.setGrupoMuscular(gm);
+        }
+
+        // 4) guardas y devuelves 200 OK
+        Ejercicio actualizado = service.update(id, existente);
+        return ResponseEntity.ok(actualizado);
     }
 
     @DeleteMapping("/{id}")
