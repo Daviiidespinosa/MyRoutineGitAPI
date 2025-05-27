@@ -5,11 +5,11 @@ import com.DavidEspinosa.MyRoutineAPI.repositories.UsuarioRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
-
 import java.util.List;
 
 @Service
 public class UsuarioServiceImpl implements UsuarioService {
+
     private final UsuarioRepository repo;
 
     public UsuarioServiceImpl(UsuarioRepository repo) {
@@ -51,10 +51,9 @@ public class UsuarioServiceImpl implements UsuarioService {
     }
 
     @Override
-    public Usuario login(String nombre, String contrasena) {
-        return repo.findByNombreAndContrasena(nombre, contrasena)
-                .orElseThrow(() ->
-                        new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Credenciales inválidas")
-                );
+    public Usuario loginByEmail(String correo, String contrasena) {
+        return repo.findByCorreo(correo)
+                .filter(u -> u.getContrasena().equals(contrasena))
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Credenciales inválidas"));
     }
 }

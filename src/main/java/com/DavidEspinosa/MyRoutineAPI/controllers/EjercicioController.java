@@ -28,7 +28,9 @@ public class EjercicioController {
     public ResponseEntity<Ejercicio> create(@RequestBody EjercicioDTO dto) {
         GrupoMuscular gm = gmService.findById(dto.getGrupoMuscularId());
         Ejercicio e = Ejercicio.builder()
-                .nombre(dto.getNombre())
+                .nombreEs(dto.getNombreEs())
+                .nombreEn(dto.getNombreEn())
+                .nombreCa(dto.getNombreCa())
                 .grupoMuscular(gm)
                 .build();
         return ResponseEntity.status(201).body(service.create(e));
@@ -39,19 +41,18 @@ public class EjercicioController {
             @PathVariable Long id,
             @RequestBody EjercicioDTO dto
     ) {
-        // 1) recupera el ejercicio existente (lanza 404 si no existe)
         Ejercicio existente = service.findById(id);
 
-        // 2) cambia sólo el nombre
-        existente.setNombre(dto.getNombre());
+        // Actualiza todos los nombres
+        existente.setNombreEs(dto.getNombreEs());
+        existente.setNombreEn(dto.getNombreEn());
+        existente.setNombreCa(dto.getNombreCa());
 
-        // 3) si en el DTO viene un grupo distinto, lo aplicas
         if (dto.getGrupoMuscularId() != null) {
             GrupoMuscular gm = gmService.findById(dto.getGrupoMuscularId());
             existente.setGrupoMuscular(gm);
         }
 
-        // 4) guardas y devuelves 200 OK
         Ejercicio actualizado = service.update(id, existente);
         return ResponseEntity.ok(actualizado);
     }

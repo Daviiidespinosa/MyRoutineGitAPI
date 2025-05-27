@@ -12,8 +12,14 @@ public class Ejercicio {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "nombre", length = 256)
-    private String nombre;
+    @Column(name = "nombre_es", length = 256)
+    private String nombreEs;
+
+    @Column(name = "nombre_en", length = 256)
+    private String nombreEn;
+
+    @Column(name = "nombre_ca", length = 256)
+    private String nombreCa;
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "grupo_muscular_id", nullable = false)

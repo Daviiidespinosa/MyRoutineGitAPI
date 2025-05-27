@@ -1,24 +1,28 @@
-// src/main/java/com/DavidEspinosa/MyRoutineAPI/models/Usuario.java
 package com.DavidEspinosa.MyRoutineAPI.models;
 
 import jakarta.persistence.*;
 import lombok.*;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "usuarios")
 @Getter @Setter @NoArgsConstructor @AllArgsConstructor @Builder
 public class Usuario {
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "nombre", length = 256)
+    @Column(name = "correo", length = 256, nullable = false, unique = true)
+    private String correo;
+
+    @Column(name = "nombre", length = 128, nullable = false)
     private String nombre;
 
-    @Column(name = "contrasena", length = 256)
+    @Column(name = "contrasena", length = 128, nullable = false)
     private String contrasena;
 
-    @Column(name = "administrador")
+    @Column(name = "administrador", nullable = false)
     private Boolean administrador;
 
     @Column(name = "altura")
@@ -27,21 +31,22 @@ public class Usuario {
     @Column(name = "peso_actual")
     private Integer pesoActual;
 
-    @Column(name = "edad")
-    private Integer edad;
+    @Column(name = "fecha_nacimiento")
+    private LocalDate fechaNacimiento;
 
-    public enum NivelActividad { BAJO, MEDIO, ALTO }
     @Enumerated(EnumType.STRING)
-    @Column(name = "nivel_actividad", length = 20)
+    @Column(name = "nivel_actividad")
     private NivelActividad nivelActividad;
 
-    public enum Objetivo { VOLUMEN, MANTENIMIENTO, DEFINICION }
     @Enumerated(EnumType.STRING)
-    @Column(name = "objetivo", length = 20)
+    @Column(name = "objetivo")
     private Objetivo objetivo;
 
-    public enum Sexo { MASCULINO, FEMENINO }
     @Enumerated(EnumType.STRING)
-    @Column(name = "sexo", length = 10)
+    @Column(name = "sexo")
     private Sexo sexo;
+
+    public enum NivelActividad { BAJO, MEDIO, ALTO }
+    public enum Objetivo         { DEFINICION, MANTENIMIENTO, VOLUMEN }
+    public enum Sexo             { MASCULINO, FEMENINO }
 }

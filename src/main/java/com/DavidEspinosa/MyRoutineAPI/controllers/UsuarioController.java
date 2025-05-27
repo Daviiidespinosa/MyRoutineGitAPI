@@ -32,12 +32,13 @@ public class UsuarioController {
     @PostMapping
     public ResponseEntity<Usuario> create(@RequestBody UsuarioDTO dto) {
         Usuario u = Usuario.builder()
+                .correo(dto.getCorreo())
                 .nombre(dto.getNombre())
                 .contrasena(dto.getContrasena())
                 .administrador(dto.getAdministrador())
                 .altura(dto.getAltura())
                 .pesoActual(dto.getPesoActual())
-                .edad(dto.getEdad())
+                .fechaNacimiento(dto.getFechaNacimiento())
                 .nivelActividad(dto.getNivelActividad())
                 .objetivo(dto.getObjetivo())
                 .sexo(dto.getSexo())
@@ -49,12 +50,13 @@ public class UsuarioController {
     public Usuario update(@PathVariable Long id, @RequestBody UsuarioDTO dto) {
         Usuario u = Usuario.builder()
                 .id(id)
+                .correo(dto.getCorreo())
                 .nombre(dto.getNombre())
                 .contrasena(dto.getContrasena())
                 .administrador(dto.getAdministrador())
                 .altura(dto.getAltura())
                 .pesoActual(dto.getPesoActual())
-                .edad(dto.getEdad())
+                .fechaNacimiento(dto.getFechaNacimiento())
                 .nivelActividad(dto.getNivelActividad())
                 .objetivo(dto.getObjetivo())
                 .sexo(dto.getSexo())
@@ -68,11 +70,9 @@ public class UsuarioController {
         return ResponseEntity.noContent().build();
     }
 
-    // ─── NUEVO LOGIN ──────────────────────────────────────────────────────
-
     @PostMapping("/login")
     public ResponseEntity<Usuario> login(@RequestBody LoginDTO dto) {
-        Usuario u = service.login(dto.getNombre(), dto.getContrasena());
+        Usuario u = service.loginByEmail(dto.getCorreo(), dto.getContrasena());
         return ResponseEntity.ok(u);
     }
 }

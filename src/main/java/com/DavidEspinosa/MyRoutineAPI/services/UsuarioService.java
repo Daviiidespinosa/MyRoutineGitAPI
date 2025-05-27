@@ -9,5 +9,5 @@ public interface UsuarioService {
     Usuario create(Usuario u);
     Usuario update(Long id, Usuario u);
     void delete(Long id);
-    Usuario login(String nombre, String contrasena);
+    Usuario loginByEmail(String correo, String contrasena);
 }
